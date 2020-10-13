@@ -55,7 +55,6 @@ RSpec.describe "CustomersControllers", type: :request do
     customer = FactoryBot.create(:customer)
     customer_attributes = FactoryBot.attributes_for(:customer)
     put customer_path(id: customer.id), params:{customer:customer_attributes}
-    expect(response.status).to eq(302)
     expect(response).to redirect_to customer_path(id: customer.id)
     end
   end
@@ -63,9 +62,8 @@ RSpec.describe "CustomersControllers", type: :request do
     it "does not update the customer record or redirect" do
       customer = FactoryBot.create(:customer)
       customer_attributes = FactoryBot.attributes_for(:customer)
-      customer_attributes[:first_name] = nil
-      put customer_path(id: customer.id), params:{customer:customer_attributes}
-      expect(response.status).to eq(200)
+      customer_attributes[:phone] = "this is not integer"
+      put customer_path(id: customer.id, params:{customer:customer_attributes})
       expect(response).to_not redirect_to customer_path(id: customer.id)
     end
   end
@@ -74,7 +72,6 @@ RSpec.describe "CustomersControllers", type: :request do
       customer = FactoryBot.create(:customer)
       customer_attributes = FactoryBot.attributes_for(:customer)
       expect { delete customer_path(id: customer.id)}.to change(Customer, :count)
-      expect(response.status).to eq(302)
       expect(response).to redirect_to customers_path
     end
   end

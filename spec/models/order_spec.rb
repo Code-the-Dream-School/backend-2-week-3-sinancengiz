@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Order, type: :model do
   #pending "add some examples to (or delete) #{__FILE__}"
   customer = Customer.create(first_name:"Sinan" ,last_name:"cenngiz", phone:"1234567890", email:"sinancengiz@gmail.com")
-  subject { Order.new(product_name: "Product Jack", product_count: 20, customer_id:customer.id )}
+  subject { Order.new(product_name: "Product Jack", product_count: 20, customer_id: customer.id )}
   it "is valid with valid attributes" do
     expect(subject).to be_valid
   end
