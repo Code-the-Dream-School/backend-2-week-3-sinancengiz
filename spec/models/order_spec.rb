@@ -30,7 +30,7 @@ RSpec.describe Order, type: :model do
   end
 
   it "is not valid without a customer exist" do
-    subject.customer_id = "30"
+    subject.customer_id = "50000"
     expect(subject).to_not be_valid
   end
 
