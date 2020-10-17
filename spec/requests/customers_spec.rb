@@ -53,17 +53,19 @@ RSpec.describe "CustomersControllers", type: :request do
   describe "put customer_path with valid data" do
     it "updates an entry and redirects to the show path for the customer"  do
       customer = FactoryBot.create(:customer)
-      customer_attributes = { id: customer.id, first_name: 'updated firstname', last_name:customer.last_name, email:customer.email, phone: customer.phone} 
-      put customer_path(id: customer.id), params:{customer:customer_attributes}
+      customer_attributes = { id: customer.id, first_name: 'updated firstname again', last_name:customer.last_name, email:customer.email, phone: customer.phone}
+      expect {  put customer_path(id: customer.id), params:{customer:customer_attributes}
+    }.to change {customer.reload.first_name}
       expect(response).to redirect_to customer_path(id: customer.id)
-    end
+      end
   end
   describe "put customer_path with invalid data" do
     it "does not update the customer record or redirect" do
       customer = FactoryBot.create(:customer)
       customer_attributes = FactoryBot.attributes_for(:customer)
       customer_attributes[:phone] = "this is not integer"
-      put customer_path(id: customer.id, params:{customer:customer_attributes})
+      expect {  put customer_path(id: customer.id), params:{customer:customer_attributes}
+    }.to_not change {customer.reload.first_name}
       expect(response).to_not redirect_to customer_path(id: customer.id)
     end
   end

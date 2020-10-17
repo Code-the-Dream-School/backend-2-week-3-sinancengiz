@@ -58,6 +58,7 @@ class CustomersController < ApplicationController
   def update
     if @customer.update(customer_params)
       flash.notice = "The customer record was updated successfully."
+      puts @customer.inspect
       redirect_to @customer
     else
       flash.now.alert = @customer.errors.full_messages.to_sentence
